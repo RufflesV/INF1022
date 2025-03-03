@@ -46,15 +46,11 @@ A gramática foi tirado do arquivo y.output:
 0 $accept: programa $end
 
     1 programa: INICIO varlist monitor_var EXECUTE cmds TERMINO
-
     2 monitor_var: MONITOR varlist
-
     3 varlist: varlist ID
     4        | ID
-
     5 cmds: cmd cmds
     6     | cmd
-
     7 cmd: ID ASSIGN ID
     8    | ID PLUS ID
     9    | ID MULT ID
@@ -65,6 +61,7 @@ A gramática foi tirado do arquivo y.output:
    14    | ID ASSIGN ID PLUS ID
    15    | ID ASSIGN ID MULT ID
    16    | EVAL ABRE_P ID ID cmds FECHA_P
+
 
 ALTERAÇÕES NA GRAMÁTICA:
 Foi adicionado o não terminal "monitor_var" para substituir "MONITOR varlist".
