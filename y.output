@@ -1,0 +1,494 @@
+Terminals unused in grammar
+
+    NUMBER
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: INICIO varlist monitor_var EXECUTE cmds TERMINO
+
+    2 monitor_var: MONITOR varlist
+
+    3 varlist: varlist ID
+    4        | ID
+
+    5 cmds: cmd cmds
+    6     | cmd
+
+    7 cmd: ID ASSIGN ID
+    8    | ID PLUS ID
+    9    | ID MULT ID
+   10    | ZERO ABRE_P ID FECHA_P
+   11    | ENQUANTO ID FACA cmds FIM
+   12    | IF ID THEN cmds FIM
+   13    | IF ID THEN cmds ELSE cmds FIM
+   14    | ID ASSIGN ID PLUS ID
+   15    | ID ASSIGN ID MULT ID
+   16    | EVAL ABRE_P ID ID cmds FECHA_P
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    INICIO <str> (258) 1
+    NUMBER <num> (259)
+    MONITOR <str> (260) 2
+    EXECUTE <str> (261) 1
+    TERMINO <str> (262) 1
+    ID <str> (263) 3 4 7 8 9 10 11 12 13 14 15 16
+    ENQUANTO <str> (264) 11
+    EVAL <str> (265) 16
+    FIM <str> (266) 11 12 13
+    FACA <str> (267) 11
+    IF <str> (268) 12 13
+    THEN <str> (269) 12 13
+    PLUS <num> (270) 8 14
+    ABRE_P <str> (271) 10 16
+    FECHA_P <str> (272) 10 16
+    ASSIGN <str> (273) 7 14 15
+    ZERO <str> (274) 10
+    ELSE <str> (275) 13
+    MULT <str> (276) 9 15
+
+
+Nonterminals, with rules where they appear
+
+    $accept (22)
+        on left: 0
+    programa <str> (23)
+        on left: 1
+        on right: 0
+    monitor_var <str> (24)
+        on left: 2
+        on right: 1
+    varlist <str> (25)
+        on left: 3 4
+        on right: 1 2 3
+    cmds <str> (26)
+        on left: 5 6
+        on right: 1 5 11 12 13 16
+    cmd <str> (27)
+        on left: 7 8 9 10 11 12 13 14 15 16
+        on right: 5 6
+
+
+State 0
+
+    0 $accept: • programa $end
+
+    INICIO  shift, and go to state 1
+
+    programa  go to state 2
+
+
+State 1
+
+    1 programa: INICIO • varlist monitor_var EXECUTE cmds TERMINO
+
+    ID  shift, and go to state 3
+
+    varlist  go to state 4
+
+
+State 2
+
+    0 $accept: programa • $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    4 varlist: ID •
+
+    $default  reduce using rule 4 (varlist)
+
+
+State 4
+
+    1 programa: INICIO varlist • monitor_var EXECUTE cmds TERMINO
+    3 varlist: varlist • ID
+
+    MONITOR  shift, and go to state 6
+    ID       shift, and go to state 7
+
+    monitor_var  go to state 8
+
+
+State 5
+
+    0 $accept: programa $end •
+
+    $default  accept
+
+
+State 6
+
+    2 monitor_var: MONITOR • varlist
+
+    ID  shift, and go to state 3
+
+    varlist  go to state 9
+
+
+State 7
+
+    3 varlist: varlist ID •
+
+    $default  reduce using rule 3 (varlist)
+
+
+State 8
+
+    1 programa: INICIO varlist monitor_var • EXECUTE cmds TERMINO
+
+    EXECUTE  shift, and go to state 10
+
+
+State 9
+
+    2 monitor_var: MONITOR varlist •
+    3 varlist: varlist • ID
+
+    ID  shift, and go to state 7
+
+    $default  reduce using rule 2 (monitor_var)
+
+
+State 10
+
+    1 programa: INICIO varlist monitor_var EXECUTE • cmds TERMINO
+
+    ID        shift, and go to state 11
+    ENQUANTO  shift, and go to state 12
+    EVAL      shift, and go to state 13
+    IF        shift, and go to state 14
+    ZERO      shift, and go to state 15
+
+    cmds  go to state 16
+    cmd   go to state 17
+
+
+State 11
+
+    7 cmd: ID • ASSIGN ID
+    8    | ID • PLUS ID
+    9    | ID • MULT ID
+   14    | ID • ASSIGN ID PLUS ID
+   15    | ID • ASSIGN ID MULT ID
+
+    PLUS    shift, and go to state 18
+    ASSIGN  shift, and go to state 19
+    MULT    shift, and go to state 20
+
+
+State 12
+
+   11 cmd: ENQUANTO • ID FACA cmds FIM
+
+    ID  shift, and go to state 21
+
+
+State 13
+
+   16 cmd: EVAL • ABRE_P ID ID cmds FECHA_P
+
+    ABRE_P  shift, and go to state 22
+
+
+State 14
+
+   12 cmd: IF • ID THEN cmds FIM
+   13    | IF • ID THEN cmds ELSE cmds FIM
+
+    ID  shift, and go to state 23
+
+
+State 15
+
+   10 cmd: ZERO • ABRE_P ID FECHA_P
+
+    ABRE_P  shift, and go to state 24
+
+
+State 16
+
+    1 programa: INICIO varlist monitor_var EXECUTE cmds • TERMINO
+
+    TERMINO  shift, and go to state 25
+
+
+State 17
+
+    5 cmds: cmd • cmds
+    6     | cmd •
+
+    ID        shift, and go to state 11
+    ENQUANTO  shift, and go to state 12
+    EVAL      shift, and go to state 13
+    IF        shift, and go to state 14
+    ZERO      shift, and go to state 15
+
+    $default  reduce using rule 6 (cmds)
+
+    cmds  go to state 26
+    cmd   go to state 17
+
+
+State 18
+
+    8 cmd: ID PLUS • ID
+
+    ID  shift, and go to state 27
+
+
+State 19
+
+    7 cmd: ID ASSIGN • ID
+   14    | ID ASSIGN • ID PLUS ID
+   15    | ID ASSIGN • ID MULT ID
+
+    ID  shift, and go to state 28
+
+
+State 20
+
+    9 cmd: ID MULT • ID
+
+    ID  shift, and go to state 29
+
+
+State 21
+
+   11 cmd: ENQUANTO ID • FACA cmds FIM
+
+    FACA  shift, and go to state 30
+
+
+State 22
+
+   16 cmd: EVAL ABRE_P • ID ID cmds FECHA_P
+
+    ID  shift, and go to state 31
+
+
+State 23
+
+   12 cmd: IF ID • THEN cmds FIM
+   13    | IF ID • THEN cmds ELSE cmds FIM
+
+    THEN  shift, and go to state 32
+
+
+State 24
+
+   10 cmd: ZERO ABRE_P • ID FECHA_P
+
+    ID  shift, and go to state 33
+
+
+State 25
+
+    1 programa: INICIO varlist monitor_var EXECUTE cmds TERMINO •
+
+    $default  reduce using rule 1 (programa)
+
+
+State 26
+
+    5 cmds: cmd cmds •
+
+    $default  reduce using rule 5 (cmds)
+
+
+State 27
+
+    8 cmd: ID PLUS ID •
+
+    $default  reduce using rule 8 (cmd)
+
+
+State 28
+
+    7 cmd: ID ASSIGN ID •
+   14    | ID ASSIGN ID • PLUS ID
+   15    | ID ASSIGN ID • MULT ID
+
+    PLUS  shift, and go to state 34
+    MULT  shift, and go to state 35
+
+    $default  reduce using rule 7 (cmd)
+
+
+State 29
+
+    9 cmd: ID MULT ID •
+
+    $default  reduce using rule 9 (cmd)
+
+
+State 30
+
+   11 cmd: ENQUANTO ID FACA • cmds FIM
+
+    ID        shift, and go to state 11
+    ENQUANTO  shift, and go to state 12
+    EVAL      shift, and go to state 13
+    IF        shift, and go to state 14
+    ZERO      shift, and go to state 15
+
+    cmds  go to state 36
+    cmd   go to state 17
+
+
+State 31
+
+   16 cmd: EVAL ABRE_P ID • ID cmds FECHA_P
+
+    ID  shift, and go to state 37
+
+
+State 32
+
+   12 cmd: IF ID THEN • cmds FIM
+   13    | IF ID THEN • cmds ELSE cmds FIM
+
+    ID        shift, and go to state 11
+    ENQUANTO  shift, and go to state 12
+    EVAL      shift, and go to state 13
+    IF        shift, and go to state 14
+    ZERO      shift, and go to state 15
+
+    cmds  go to state 38
+    cmd   go to state 17
+
+
+State 33
+
+   10 cmd: ZERO ABRE_P ID • FECHA_P
+
+    FECHA_P  shift, and go to state 39
+
+
+State 34
+
+   14 cmd: ID ASSIGN ID PLUS • ID
+
+    ID  shift, and go to state 40
+
+
+State 35
+
+   15 cmd: ID ASSIGN ID MULT • ID
+
+    ID  shift, and go to state 41
+
+
+State 36
+
+   11 cmd: ENQUANTO ID FACA cmds • FIM
+
+    FIM  shift, and go to state 42
+
+
+State 37
+
+   16 cmd: EVAL ABRE_P ID ID • cmds FECHA_P
+
+    ID        shift, and go to state 11
+    ENQUANTO  shift, and go to state 12
+    EVAL      shift, and go to state 13
+    IF        shift, and go to state 14
+    ZERO      shift, and go to state 15
+
+    cmds  go to state 43
+    cmd   go to state 17
+
+
+State 38
+
+   12 cmd: IF ID THEN cmds • FIM
+   13    | IF ID THEN cmds • ELSE cmds FIM
+
+    FIM   shift, and go to state 44
+    ELSE  shift, and go to state 45
+
+
+State 39
+
+   10 cmd: ZERO ABRE_P ID FECHA_P •
+
+    $default  reduce using rule 10 (cmd)
+
+
+State 40
+
+   14 cmd: ID ASSIGN ID PLUS ID •
+
+    $default  reduce using rule 14 (cmd)
+
+
+State 41
+
+   15 cmd: ID ASSIGN ID MULT ID •
+
+    $default  reduce using rule 15 (cmd)
+
+
+State 42
+
+   11 cmd: ENQUANTO ID FACA cmds FIM •
+
+    $default  reduce using rule 11 (cmd)
+
+
+State 43
+
+   16 cmd: EVAL ABRE_P ID ID cmds • FECHA_P
+
+    FECHA_P  shift, and go to state 46
+
+
+State 44
+
+   12 cmd: IF ID THEN cmds FIM •
+
+    $default  reduce using rule 12 (cmd)
+
+
+State 45
+
+   13 cmd: IF ID THEN cmds ELSE • cmds FIM
+
+    ID        shift, and go to state 11
+    ENQUANTO  shift, and go to state 12
+    EVAL      shift, and go to state 13
+    IF        shift, and go to state 14
+    ZERO      shift, and go to state 15
+
+    cmds  go to state 47
+    cmd   go to state 17
+
+
+State 46
+
+   16 cmd: EVAL ABRE_P ID ID cmds FECHA_P •
+
+    $default  reduce using rule 16 (cmd)
+
+
+State 47
+
+   13 cmd: IF ID THEN cmds ELSE cmds • FIM
+
+    FIM  shift, and go to state 48
+
+
+State 48
+
+   13 cmd: IF ID THEN cmds ELSE cmds FIM •
+
+    $default  reduce using rule 13 (cmd)
